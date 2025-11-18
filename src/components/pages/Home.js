@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import LiveChart from '../blocks/LiveChart'
-import SensorBG from '../../assets/spine.jpg'
-import ThoracicIm from '../../assets/Thoracic.avif'
-import SacralIm from '../../assets/Thoracic.avif'
-import LumberIm from '../../assets/lumbar.png'
-import CervicalIm from '../../assets/Cervical.png'
-import LeftShoulderIm from '../../assets/Leftshoulder.png'
-import RigthShoulderIm from '../../assets/right shoulder.jpg'
-import HipIm from '../../assets/hip-pain-new.jpg'
-
 
 function Home() {
 
-  const [cervical, setCervical] = useState(null) // field 1
-  const [thoracic, setThoracic] = useState(null) // field 2
-  const [lumber, setLumber] = useState(null) // field 3
-  const [sacral,setSacral]=useState(null) //field 4
-  const [leftShoulder,setLeftShoulder]=useState(null) //field 5
-  const [rightShoulder, setRightShoulder] = useState(null) // field 6
-  const [leftHip, setLeftHip] = useState(null) // field 7
-  const [rightHip,setRightHip]=useState(null) // field 8
+  // Think Speak one
+  const [fieldOne, setFieldOne] = useState(null) // field 1 
+  const [fieldTwo, setFieldTwo] = useState(null) // field 2
 
-  const [recentCervicalValue, setRecentCervicalValue] = useState(null)
-  const [recentThoracicValue, setRecentThoracicValue] = useState(null) 
-  const [recentLumberValue, setRecentLumberValue] = useState(null) 
-  const [recentSacralValue,setRecentSacralValue]=useState(null)
-  const [recentLeftShoulderValue, setRecentLeftShoulderValue] = useState(null) 
-  const [recentRightShoulderValue, setRecentRightShoulderValue] = useState(null)
-  const [recentLeftHipValue, setRecentLeftHipValue] = useState(null)
-  const [recentRightHipValue, setRecentRightHipValue] = useState(null)
+  const [recentfieldOneValue, setRecentFieldOneValue] = useState(null) // field 1
+  const [recentfieldTwoValue, setRecentFieldTwoValue] = useState(null) // field 2
+  const [recentfieldThreeValue, setRecentFieldThreeValue] = useState(null) // field 3
+  const [recentfieldFourValue, setRecentFieldFourValue] = useState(null) // field 4
+  const [recentfieldSixValue, setRecentFieldFiveValue] = useState(null) // field 5
+  const [recentfieldSevenValue, setRecentFieldSixValue] = useState(null) // field 6
 
-  const url = process.env.REACT_APP_ThinkSpeak_URL
-  const EmergencyValue = 2000
+  // Think Speak Two
+  const [thinkTowFieldOne,setThinkTowFieldOne]=useState(null) //field 1
+
+  const [recentThinkTowFieldOneValue, setRecentThinkTowFieldOneValue] = useState(null) // field 1
+  const [recentThinkTowFieldTwoValue, setRecentThinkTowFieldTwoValue] = useState(null) // field 2
+
+// Think Speak urls
+  const url = process.env.REACT_APP_ThinkSpeak_URL // Think url one
+  const urlTow = process.env.REACT_APP_ThinkSpeak_URL_Two // Think url Two
+
+  // const clearValueRange = process.env.CLEAR_VALUE_RANGE 
+  // const nirRange = process.env.NIR_RANGE 
+  const rednessRange = process.env.RED_NESS_RANGE ?? 50
+  // const moistureRange = process.env.MOISTURE_RANGE 
+  const eyeTemperatureRange = process.env.EYE_TEMPERATRUE_RANGE ?? 35
+  // const eyeFatigueRage = process.env.FATIGUE_RANGE 
+  // const pepilDiameterRange = process.env.PEPIL_DIAMETER_RANGE 
+  // const blinkCountRange = process.env.BLINK_COUNT_RANGE 
 
   const controls = {
     show: true,
@@ -55,132 +55,59 @@ function Home() {
           if (data && data.feeds && data.feeds.length > 0) {
             const xAxis = data.feeds.map(feed => new Date(feed.created_at).getTime())
 
-            setCervical({
+            setFieldOne({
               "x-axis": xAxis,
               "y-axis": data.feeds.map(feed => Number(feed.field1) || 0),
-              color: "black",
-              seriesName: 'Cervical'
+              color: "blue",
+              seriesName: 'CLEAR VALUE'
             })
 
-            setThoracic({
+            setFieldTwo({
               "x-axis": xAxis,
               "y-axis": data.feeds.map(feed => Number(feed.field2) || 0),
-              color: "black",
-              seriesName: 'Thoracic'
+              color: "red",
+              seriesName: 'NIR'
             })
 
-            setLumber({
-              "x-axis": xAxis,
-              "y-axis": data.feeds.map(feed => Number(feed.field3) || 0),
-              color: "black",
-              seriesName: 'Lumber'
-            })
+            const recentFieldOneLevel = data.feeds.slice(-1)[0].field1.toUpperCase()
+            setRecentFieldOneValue(recentFieldOneLevel)
 
-            setSacral({
-              "x-axis": xAxis,
-              "y-axis": data.feeds.map(feed => Number(feed.field4) || 0),
-              color: "black",
-              seriesName: 'Sacral'
-            })
+            const recentFieldTwoLevel = data.feeds.slice(-1)[0].field2.toUpperCase()
+            setRecentFieldTwoValue(recentFieldTwoLevel)
 
-            setLeftShoulder({
-              "x-axis": xAxis,
-              "y-axis": data.feeds.map(feed => Number(feed.field5) || 0),
-              color: "black",
-              seriesName: 'Left Shoulder'
-            })
+            const recentFieldThreeLevel = data.feeds.slice(-1)[0].field3.toUpperCase()
+            setRecentFieldThreeValue(recentFieldThreeLevel)
 
-            setRightShoulder({
-              "x-axis": xAxis,
-              "y-axis": data.feeds.map(feed => Number(feed.field6) || 0),
-              color: "black",
-              seriesName: 'Right Shoulder'
-            })
+            const recentFieldFourLevel = data.feeds.slice(-1)[0].field4.toUpperCase()
+            setRecentFieldFourValue(recentFieldFourLevel)
 
-            setLeftHip({
-              "x-axis": xAxis,
-              "y-axis": data.feeds.map(feed => Number(feed.field7) || 0),
-              color: "black",
-              seriesName: 'Left Hip'
-            })
+            const recentFieldFiveLevel = data.feeds.slice(-1)[0].field5.toUpperCase()
+            setRecentFieldFiveValue(recentFieldFiveLevel)
 
-            setRightHip({
-              "x-axis": xAxis,
-              "y-axis": data.feeds.map(feed => Number(feed.field8) || 0),
-              color: "black",
-              seriesName: 'Right Hip'
-            })
-
-            const recentGripLevel = data.feeds.slice(-1)[0].field1.toUpperCase()
-            setRecentCervicalValue(recentGripLevel)
-
-            const recentTemperatureLevel = data.feeds.slice(-1)[0].field2.toUpperCase()
-            setRecentThoracicValue(recentTemperatureLevel)
-
-            const recentFallDetectLevel = data.feeds.slice(-1)[0].field3.toUpperCase()
-            setRecentLumberValue(recentFallDetectLevel)
-
-            const recentPostureLevel = data.feeds.slice(-1)[0].field4.toUpperCase()
-            setRecentSacralValue(recentPostureLevel)
-
-            const recentBatteryPercentageLevel = data.feeds.slice(-1)[0].field5.toUpperCase()
-            setRecentLeftShoulderValue(recentBatteryPercentageLevel)
-
-            const recentHeartRateLevel = data.feeds.slice(-1)[0].field6.toUpperCase()
-            setRecentRightShoulderValue(recentHeartRateLevel)
-
-            const recentSpo2Level = data.feeds.slice(-1)[0].field7.toUpperCase()
-            setRecentLeftHipValue(recentSpo2Level)
-
-            const recentSpo3Level = data.feeds.slice(-1)[0].field8.toUpperCase()
-            setRecentRightHipValue(recentSpo3Level)
+            const recentFieldSixLevel = data.feeds.slice(-1)[0].field6.toUpperCase()
+            setRecentFieldSixValue(recentFieldSixLevel)
 
           }
           else{
-            setCervical({
+            setFieldOne({
+              "x-axis": [],
+              "y-axis": [],
+              color: "blue",
+              seriesName: 'CLEAR VALUE'
+            })
+            setFieldTwo({
               "x-axis": [],
               "y-axis": [],
               color: "black",
-              seriesName: 'Heart rate'
+              seriesName: 'NIR'
             })
-            setThoracic({
-              "x-axis": [],
-              "y-axis": [],
-              color: "black",
-              seriesName: 'thoracic'
-            })
-            setLumber({
-              "x-axis": [],
-              "y-axis": [],
-              color: "black",
-              seriesName: 'Snoring Level'
-            })
-            setSacral({
-              "x-axis": [],
-              "y-axis": [],
-              color: "#ED254E",
-              seriesName: 'Roll'
-            })
-            setLeftShoulder({
-              "x-axis": [],
-              "y-axis": [],
-              color: "#00F874",
-              seriesName: 'Pitch'
-            })
-            setRightShoulder({
-              "x-axis": [],
-              "y-axis": [],
-              color: "#2A4494",
-              seriesName: 'Yaw'
-            })
-            setRecentCervicalValue("No Data")
-            setRecentThoracicValue("No Data")
-            setRecentLumberValue("No Data")
-            setRecentSacralValue("No Data")
-            setRecentLeftShoulderValue("No Data")
-            setRecentRightShoulderValue("No Data")
-            setRecentLeftHipValue("No Data")
-            setRecentRightHipValue("No Data")
+
+            setRecentFieldOneValue("No Data")
+            setRecentFieldTwoValue("No Data")
+            setRecentFieldThreeValue("No Data")
+            setRecentFieldFourValue("No Data")
+            setRecentFieldFiveValue("No Data")
+            setRecentFieldSixValue("No Data")
           }
         })
         .catch(err => {
@@ -194,122 +121,160 @@ function Home() {
       // Optionally, set up polling for live data updates (e.g., every 30 seconds)
       intervalId = setInterval(fetchData, 5000);
     }
-
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [url]);
 
 
+  useEffect(() => {
+    const fetchData = async () => {
+      fetch(urlTow)
+        .then(res => res.json())
+        .then(data => {
+          console.log("data:", data)
+          if (data && data.feeds && data.feeds.length > 0) {
+            const xAxis = data.feeds.map(feed => new Date(feed.created_at).getTime())
 
-  if (!cervical || !thoracic || !lumber || !sacral || !leftShoulder || !rightShoulder ) {
+            setThinkTowFieldOne({
+              "x-axis": xAxis,
+              "y-axis": data.feeds.map(feed => Number(feed.field1) || 0),
+              color: "green",
+              seriesName: 'Pepil Diameter'
+            })
+
+            const recentThinkTowFieldOneLevel = data.feeds.slice(-1)[0].field1.toUpperCase()
+            setRecentThinkTowFieldOneValue(recentThinkTowFieldOneLevel)
+
+            const recentThinkTowFieldTwoLevel = data.feeds.slice(-1)[0].field2.toUpperCase()
+            setRecentThinkTowFieldTwoValue(recentThinkTowFieldTwoLevel)
+
+          }
+          else {
+            setThinkTowFieldOne({
+              "x-axis": [],
+              "y-axis": [],
+              color: "white",
+              seriesName: 'Pepil Diameter'
+            })
+
+            setRecentThinkTowFieldOneValue("No Data")
+            setRecentThinkTowFieldTwoValue("No Data")
+          }
+        })
+        .catch(err => {
+          console.log("Error in fetching from Thinkspeak:", err)
+        })
+    };
+
+    let intervalId
+    if (urlTow) {
+      fetchData();
+      // Optionally, set up polling for live data updates (e.g., every 30 seconds)
+      intervalId = setInterval(fetchData, 5000);
+    }
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, [urlTow]);
+
+
+
+  if (!fieldOne || !fieldTwo || !thinkTowFieldOne  ) {
     return <div>Loading...</div>
   }
 
   return (
-    <div className="mx-auto space-y-10 md:px-10 px-2">
-      <div className="md:flex md:justify-evenly gap-6 mt-6 space-y-3">
-        {/* Current Value Card */}
-        <div className="border rounded-2xl shadow-md bg-white w-full p-3">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">Current Values</h2>
+    <div className="mx-auto space-y-10 md:px-10 px-2 mb-10">
+      <div className="flex flex-col md:flex-row md:justify-evenly gap-6 mt-6 w-full">
 
-          <div className="text-center text-primary-950 font-bold text-2xl mb-6 tracking-wide uppercase">
-            Eye sense ai
-          </div>
+        {/* Left Section → Current Values */}
+        <div className="w-full md:w-1/2 lg:w-2/3">
 
-          <div className="space-y-4 flex flex-wrap">
-            <CardRow
-              label="Recent Cervical Value"
-              value={recentCervicalValue}
-              bgImage={CervicalIm}
-              className={
-                Number(recentCervicalValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
-            <CardRow
-              label="Recent Thoracic Value"
-              value={recentThoracicValue}
-              bgImage={ThoracicIm}
-              className={
-                Number(recentThoracicValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
+          <div className="border rounded-2xl shadow-md bg-white w-full p-4">
 
-            <CardRow
-              label="Recent Lumber Value"
-              value={recentLumberValue}
-              bgImage={LumberIm}
-              className={
-                Number(recentLumberValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
+            <h2 className="text-lg font-semibold text-gray-700 mb-4">
+              Current Values
+            </h2>
 
-            <CardRow
-              label="Recent Sacral Value"
-              value={recentSacralValue}
-              bgImage={SacralIm}
-              className={
-                Number(recentSacralValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
+            <div className="text-center text-primary-950 font-bold text-2xl mb-6 tracking-wide uppercase">
+              Eye sense ai
+            </div>
 
-            <CardRow
-              label="Recent Left Shoulder Value"
-              value={recentLeftShoulderValue}
-              bgImage={LeftShoulderIm}
-              className={
-                Number(recentLeftShoulderValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
+            {/* Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
 
-            <CardRow
-              label="Recent Right Shoulder Value"
-              value={recentRightShoulderValue}
-              bgImage={RigthShoulderIm}
-              className={
-                Number(recentRightShoulderValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
+              <CardRow
+                label="Clear value"
+                value={recentfieldOneValue}
 
-            <CardRow
-              label="Recent Left Hip Value"
-              value={recentLeftHipValue}
-              bgImage={HipIm}
-              className={
-                Number(recentLeftHipValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white "
-              }
-            />
+              />
 
-            <CardRow
-              label="Recent Right Hip Value"
-              value={recentRightHipValue}
-              bgImage={HipIm}
-              className={
-                Number(recentRightHipValue) === Number(EmergencyValue)
-                  ? "shadow-md shadow-red-500 animate-pulse"
-                  : "bg-white"
-              }
-            />
+              <CardRow
+                label="NIR"
+                value={recentfieldTwoValue}
+              />
+
+              <CardRow
+                label="Red ness"
+                value={recentfieldThreeValue}
+                className={
+                  Number(recentfieldThreeValue) >= Number(rednessRange)
+                    ? "shadow-md shadow-red-500 animate-pulse"
+                    : "bg-white"
+                }
+              />
+
+              <CardRow
+                label="Moisture"
+                value={recentfieldFourValue}
+
+              />
+
+              <CardRow
+                label="Eye temperature"
+                value={recentfieldSixValue}
+                className={
+                  Number(recentfieldSixValue) >= Number(eyeTemperatureRange)
+                    ? "shadow-md shadow-red-500 animate-pulse"
+                    : "bg-white"
+                }
+              />
+
+              <CardRow
+                label="Fatigue"
+                value={recentfieldSevenValue}
+
+              />
+
+              <CardRow
+                label="Pepil Diameter"
+                value={recentThinkTowFieldOneValue}
+ 
+              />
+
+              <CardRow
+                label="Blink count"
+                value={recentThinkTowFieldTwoValue}
+
+              />
+
+            </div>
           </div>
         </div>
+
+        {/* Right Section → Alert */}
+        {/* <div className="w-full md:w-1/2 lg:w-1/3">
+          <div className="border bg-white px-10 py-10 rounded-xl shadow-md">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Alert</h2>
+
+          
+          </div>
+        </div> */}
+
       </div>
 
 
       {/* Charts Section */}
       <div className="flex flex-wrap justify-center md:justify-between gap-4">
-        {[cervical, thoracic, lumber, sacral, leftShoulder, rightShoulder, leftHip, rightHip].map(
+        {[fieldOne, fieldTwo, thinkTowFieldOne].map(
           (chartData, i) => (
             <div
               key={i}
@@ -337,10 +302,6 @@ function Home() {
           )
         )}
       </div>
-
-
-
-
     </div>
   );
 }
@@ -348,26 +309,15 @@ function Home() {
 export default Home
 
 
-const CardRow = ({ label, value, bgImage, className }) => (
-  <div className={`${className} shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto relative`}>
-
-    {/* 🖼 Product / Sensor Image */}
-    <img
-      src={bgImage}
-      alt={label}
-      className="w-32 mx-auto mt-6 mb-2 drop-shadow-md"
-    />
-
-    {/* Title */}
-    <h3 className="text-lg font-semibold text-center mt-2">
-      {label}
-    </h3>
-
-    {/* Category / Value */}
-    <p className="text-gray-500 text-sm text-center">
-      Value: {value}
-    </p>
-
+const CardRow = ({ label, value, className }) => (
+  <div className={`${className} shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto bg-white`}>
+    <ul className="text-gray-700 text-base font-medium">
+      <li className="flex justify-between">
+        <span className="font-semibold">{label}</span>
+        <span className="text-primary-900 bg-primary-100 text-white py-1 px-4 rounded-xl">{value}</span>
+      </li>
+    </ul>
   </div>
 );
+
 
