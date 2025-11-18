@@ -15,12 +15,12 @@ function Home() {
   const [recentfieldSevenValue, setRecentFieldSixValue] = useState(null) // field 6
 
   // Think Speak Two
-  const [thinkTowFieldOne,setThinkTowFieldOne]=useState(null) //field 1
+  const [thinkTowFieldOne, setThinkTowFieldOne] = useState(null) //field 1
 
   const [recentThinkTowFieldOneValue, setRecentThinkTowFieldOneValue] = useState(null) // field 1
   const [recentThinkTowFieldTwoValue, setRecentThinkTowFieldTwoValue] = useState(null) // field 2
 
-// Think Speak urls
+  // Think Speak urls
   const url = process.env.REACT_APP_ThinkSpeak_URL // Think url one
   const urlTow = process.env.REACT_APP_ThinkSpeak_URL_Two // Think url Two
 
@@ -88,7 +88,7 @@ function Home() {
             setRecentFieldSixValue(recentFieldSixLevel)
 
           }
-          else{
+          else {
             setFieldOne({
               "x-axis": [],
               "y-axis": [],
@@ -177,7 +177,7 @@ function Home() {
 
 
 
-  if (!fieldOne || !fieldTwo || !thinkTowFieldOne  ) {
+  if (!fieldOne || !fieldTwo || !thinkTowFieldOne) {
     return <div>Loading...</div>
   }
 
@@ -190,9 +190,28 @@ function Home() {
 
           <div className="border rounded-2xl shadow-md bg-white w-full p-4">
 
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">
-              Current Values
-            </h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                Current Values
+              </h2>
+
+              <div className="flex items-center gap-6">
+                {/* Warning */}
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                  <p className="text-sm text-gray-700 font-medium">Warning</p>
+                </div>
+
+                {/* Normal */}
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-primary-400"></span>
+                  <p className="text-sm text-gray-700 font-medium">Normal</p>
+                </div>
+              </div>
+            </div>
+
+
+
 
             <div className="text-center text-primary-950 font-bold text-2xl mb-6 tracking-wide uppercase">
               Eye sense ai
@@ -204,12 +223,14 @@ function Home() {
               <CardRow
                 label="Clear value"
                 value={recentfieldOneValue}
+                className="bg-primary-100"
 
               />
 
               <CardRow
                 label="NIR"
                 value={recentfieldTwoValue}
+                className="bg-primary-100"
               />
 
               <CardRow
@@ -217,14 +238,15 @@ function Home() {
                 value={recentfieldThreeValue}
                 className={
                   Number(recentfieldThreeValue) >= Number(rednessRange)
-                    ? "shadow-md shadow-red-500 animate-pulse"
-                    : "bg-white"
+                    ? "bg-red-500"
+                    : "bg-primary-100"
                 }
               />
 
               <CardRow
                 label="Moisture"
                 value={recentfieldFourValue}
+                className="bg-primary-100"
 
               />
 
@@ -233,27 +255,27 @@ function Home() {
                 value={recentfieldSixValue}
                 className={
                   Number(recentfieldSixValue) >= Number(eyeTemperatureRange)
-                    ? "shadow-md shadow-red-500 animate-pulse"
-                    : "bg-white"
+                    ? "bg-red-500"
+                    : "bg-primary-100"
                 }
               />
 
               <CardRow
                 label="Fatigue"
                 value={recentfieldSevenValue}
-
+                className="bg-primary-100"
               />
 
               <CardRow
                 label="Pepil Diameter"
                 value={recentThinkTowFieldOneValue}
- 
+                className="bg-primary-100"
               />
 
               <CardRow
                 label="Blink count"
                 value={recentThinkTowFieldTwoValue}
-
+                className="bg-primary-100"
               />
 
             </div>
@@ -310,11 +332,11 @@ export default Home
 
 
 const CardRow = ({ label, value, className }) => (
-  <div className={`${className} shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto bg-white`}>
+  <div className={` shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto bg-white`}>
     <ul className="text-gray-700 text-base font-medium">
       <li className="flex justify-between">
         <span className="font-semibold">{label}</span>
-        <span className="text-primary-900 bg-primary-100 text-white py-1 px-4 rounded-xl">{value}</span>
+        <span className={`${className} text-primary-900 text-white py-1 px-4 rounded-xl`}>{value}</span>
       </li>
     </ul>
   </div>
