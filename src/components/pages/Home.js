@@ -138,7 +138,7 @@ function Home() {
               "x-axis": xAxis,
               "y-axis": data.feeds.map(feed => Number(feed.field1) || 0),
               color: "green",
-              seriesName: 'Pepil Diameter'
+              seriesName: 'Pupil Diameter'
             })
 
             const recentThinkTowFieldOneLevel = data.feeds.slice(-1)[0].field1.toUpperCase()
@@ -153,7 +153,7 @@ function Home() {
               "x-axis": [],
               "y-axis": [],
               color: "white",
-              seriesName: 'Pepil Diameter'
+              seriesName: 'Pupil Diameter'
             })
 
             setRecentThinkTowFieldOneValue("No Data")
@@ -214,7 +214,7 @@ function Home() {
 
 
             <div className="text-center text-primary-950 font-bold text-2xl mb-6 tracking-wide uppercase">
-              Eye sense ai
+              WEAR 2 SENSE
             </div>
 
             {/* Responsive Grid */}
@@ -234,7 +234,7 @@ function Home() {
               />
 
               <CardRow
-                label="Red ness"
+                label="Redness"
                 value={recentfieldThreeValue}
                 className={
                   Number(recentfieldThreeValue) >= Number(rednessRange)
@@ -267,7 +267,7 @@ function Home() {
               />
 
               <CardRow
-                label="Pepil Diameter"
+                label="Pupil Diameter"
                 value={recentThinkTowFieldOneValue}
                 className="bg-primary-100"
               />
