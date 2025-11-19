@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import LiveChart from '../blocks/LiveChart'
+import {
+  NIR_RANGE_WARNING_MIN,
+  NIR_RANGE_WARNING_MAX,
+  RED_NESS_MIN,
+  RED_NESS_RANGE_MAX,
+  EYE_TEMPERATURE_RANGE_MIN,
+  EYE_TEMPERATURE_RANGE_MAX,
+  BLINK_COUNT_RANGE_MIN,
+  BLINK_COUNT_RANGE_MAX,
+  URL,
+  URLTWO
+} from "../../utils/Range";
 
 function Home() {
 
@@ -21,17 +33,22 @@ function Home() {
   const [recentThinkTowFieldTwoValue, setRecentThinkTowFieldTwoValue] = useState(null) // field 2
 
   // Think Speak urls
-  const url = process.env.REACT_APP_ThinkSpeak_URL // Think url one
-  const urlTow = process.env.REACT_APP_ThinkSpeak_URL_Two // Think url Two
+  const url = URL // Think url one
+  const urlTow = URLTWO // Think url Two
 
   // const clearValueRange = process.env.CLEAR_VALUE_RANGE 
-  const nirRange = process.env.NIR_RANGE ?? 800
-  const rednessRange = process.env.RED_NESS_RANGE ?? 60
+  const minNirRange = NIR_RANGE_WARNING_MIN
+  const maxNirRange = NIR_RANGE_WARNING_MAX
+
+  const minRednessRange =RED_NESS_MIN
+  const maxRednessRange = RED_NESS_RANGE_MAX 
   // const moistureRange = process.env.MOISTURE_RANGE 
-  const eyeTemperatureRange = process.env.EYE_TEMPERATRUE_RANGE ?? 37
+  const minEyeTemperatureRange = EYE_TEMPERATURE_RANGE_MIN
+  const maxEyeTemperatureRange = EYE_TEMPERATURE_RANGE_MAX  
   // const eyeFatigueRage = process.env.FATIGUE_RANGE 
   // const pepilDiameterRange = process.env.PEPIL_DIAMETER_RANGE 
-  const blinkCountRange = process.env.BLINK_COUNT_RANGE ?? 20
+  const minBlinkCountRange = BLINK_COUNT_RANGE_MIN
+  const maxBlinkCountRange = BLINK_COUNT_RANGE_MAX
 
   const controls = {
     show: true,
@@ -231,15 +248,15 @@ function Home() {
               <CardRow
                 label="NIR"
                 value={recentfieldTwoValue}
-                min={600}
-                max={800}
+                min={Number(minNirRange)}
+                max={Number(maxNirRange)}
               />
 
               <CardRow
                 label="Redness"
                 value={recentfieldThreeValue}
-                min={30}
-                max={60}
+                min={Number(minRednessRange)}
+                max={Number(maxRednessRange)}
               />
 
               <CardRow
@@ -250,8 +267,8 @@ function Home() {
               <CardRow
                 label="Eye temperature"
                 value={recentfieldSixValue}
-                min={36}
-                max={37}
+                min={Number(minEyeTemperatureRange)}
+                max={Number(maxEyeTemperatureRange)}
               />
 
               <CardRow
@@ -267,8 +284,8 @@ function Home() {
               <CardRow
                 label="Blink count"
                 value={recentThinkTowFieldTwoValue}
-                min={20}
-                max={40}
+                min={Number(minBlinkCountRange)}
+                max={Number(maxBlinkCountRange)}
               />
 
             </div>
