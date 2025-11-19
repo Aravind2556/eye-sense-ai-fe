@@ -25,13 +25,13 @@ function Home() {
   const urlTow = process.env.REACT_APP_ThinkSpeak_URL_Two // Think url Two
 
   // const clearValueRange = process.env.CLEAR_VALUE_RANGE 
-  // const nirRange = process.env.NIR_RANGE 
-  const rednessRange = process.env.RED_NESS_RANGE ?? 50
+  const nirRange = process.env.NIR_RANGE ?? 800
+  const rednessRange = process.env.RED_NESS_RANGE ?? 60
   // const moistureRange = process.env.MOISTURE_RANGE 
-  const eyeTemperatureRange = process.env.EYE_TEMPERATRUE_RANGE ?? 35
+  const eyeTemperatureRange = process.env.EYE_TEMPERATRUE_RANGE ?? 37
   // const eyeFatigueRage = process.env.FATIGUE_RANGE 
   // const pepilDiameterRange = process.env.PEPIL_DIAMETER_RANGE 
-  // const blinkCountRange = process.env.BLINK_COUNT_RANGE 
+  const blinkCountRange = process.env.BLINK_COUNT_RANGE ?? 20
 
   const controls = {
     show: true,
@@ -189,16 +189,22 @@ function Home() {
         <div className="w-full md:w-1/2 lg:w-2/3">
 
           <div className="border rounded-2xl shadow-md bg-white w-full p-4">
-
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">
+              <h2 className="text-lg font-semibold text-gray-700 mb-4 w-full">
                 Current Values
               </h2>
-
+             
+             <div>
               <div className="flex items-center gap-6">
-                {/* Warning */}
+                {/* { Danger} */}
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                  <p className="text-sm text-gray-700 font-medium">Danger</p>
+                </div>
+                 
+                 {/* {Warning} */}
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
                   <p className="text-sm text-gray-700 font-medium">Warning</p>
                 </div>
 
@@ -208,13 +214,10 @@ function Home() {
                   <p className="text-sm text-gray-700 font-medium">Normal</p>
                 </div>
               </div>
-            </div>
-
-
-
-
-            <div className="text-center text-primary-950 font-bold text-2xl mb-6 tracking-wide uppercase">
-              WEAR 2 SENSE
+              <div className='border py-2 px-2 rounded-xl'>
+                  These values check if your eyes are normal or having any problem.
+              </div>
+              </div>
             </div>
 
             {/* Responsive Grid */}
@@ -223,59 +226,49 @@ function Home() {
               <CardRow
                 label="Clear value"
                 value={recentfieldOneValue}
-                className="bg-primary-100"
-
               />
 
               <CardRow
                 label="NIR"
                 value={recentfieldTwoValue}
-                className="bg-primary-100"
+                min={600}
+                max={800}
               />
 
               <CardRow
                 label="Redness"
                 value={recentfieldThreeValue}
-                className={
-                  Number(recentfieldThreeValue) >= Number(rednessRange)
-                    ? "bg-red-500"
-                    : "bg-primary-100"
-                }
+                min={30}
+                max={60}
               />
 
               <CardRow
                 label="Moisture"
                 value={recentfieldFourValue}
-                className="bg-primary-100"
-
               />
 
               <CardRow
                 label="Eye temperature"
                 value={recentfieldSixValue}
-                className={
-                  Number(recentfieldSixValue) >= Number(eyeTemperatureRange)
-                    ? "bg-red-500"
-                    : "bg-primary-100"
-                }
+                min={36}
+                max={37}
               />
 
               <CardRow
                 label="Fatigue"
-                value={recentfieldSevenValue}
-                className="bg-primary-100"
+                value={recentfieldSevenValue}                
               />
 
               <CardRow
                 label="Pupil Diameter"
                 value={recentThinkTowFieldOneValue}
-                className="bg-primary-100"
               />
 
               <CardRow
                 label="Blink count"
                 value={recentThinkTowFieldTwoValue}
-                className="bg-primary-100"
+                min={20}
+                max={40}
               />
 
             </div>
@@ -331,15 +324,47 @@ function Home() {
 export default Home
 
 
-const CardRow = ({ label, value, className }) => (
-  <div className={` shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto bg-white`}>
-    <ul className="text-gray-700 text-base font-medium">
-      <li className="flex justify-between">
-        <span className="font-semibold">{label}</span>
-        <span className={`${className} text-primary-900 text-white py-1 px-4 rounded-xl`}>{value}</span>
-      </li>
-    </ul>
-  </div>
-);
+// const CardRow = ({ label, value, className }) => (
+//   <div className={` shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto bg-white`}>
+//     <ul className="text-gray-700 text-base font-medium">
+//       <li className="flex justify-between">
+//         <span className="font-semibold">{label}</span>
+//         <span className={`${className} text-primary-900 text-white py-1 px-4 rounded-xl`}>{value}</span>
+//       </li>
+//     </ul>
+//   </div>
+// );
+
+
+const CardRow = ({ label, value, min, max }) => {
+
+  // Auto Color Logic
+  let bgColor = "bg-primary-400"; // Normal
+
+  if (value >= max) {
+    bgColor = "bg-red-500"; // Danger
+  } else if (value > min && value < max) {
+    bgColor = "bg-yellow-500"; // Warning
+  }
+
+  return (
+    <div className="shadow-lg rounded-2xl p-4 w-full max-w-sm mx-auto bg-white">
+      <ul className="text-gray-700 text-base font-medium">
+        <li className="flex justify-between items-center">
+          <span className="font-semibold">{label}</span>
+
+          <span
+            className={`text-white font-semibold py-1 px-4 rounded-xl ${bgColor}`}
+          >
+            {value}
+          </span>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+
+
 
 
