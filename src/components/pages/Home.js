@@ -10,7 +10,11 @@ import {
   BLINK_COUNT_RANGE_MIN,
   BLINK_COUNT_RANGE_MAX,
   URL,
-  URLTWO
+  URLTWO,
+  FATIGUE_RANGE_MIN,
+  FATIGUE_RANGE_MAX,
+  PUPIL_RANGE_MIN,
+  PUPIL_RANGE_MAX
 } from "../../utils/Range";
 
 function Home() {
@@ -40,15 +44,23 @@ function Home() {
   const minNirRange = NIR_RANGE_WARNING_MIN
   const maxNirRange = NIR_RANGE_WARNING_MAX
 
-  const minRednessRange =RED_NESS_MIN
-  const maxRednessRange = RED_NESS_RANGE_MAX 
+  const minRednessRange = RED_NESS_MIN
+  const maxRednessRange = RED_NESS_RANGE_MAX
   // const moistureRange = process.env.MOISTURE_RANGE 
   const minEyeTemperatureRange = EYE_TEMPERATURE_RANGE_MIN
-  const maxEyeTemperatureRange = EYE_TEMPERATURE_RANGE_MAX  
+  const maxEyeTemperatureRange = EYE_TEMPERATURE_RANGE_MAX
   // const eyeFatigueRage = process.env.FATIGUE_RANGE 
   // const pepilDiameterRange = process.env.PEPIL_DIAMETER_RANGE 
   const minBlinkCountRange = BLINK_COUNT_RANGE_MIN
   const maxBlinkCountRange = BLINK_COUNT_RANGE_MAX
+
+  const minFatigueCountRange = FATIGUE_RANGE_MIN
+  const maxFatigueCountRange = FATIGUE_RANGE_MAX
+
+  const minPupilCountRange = PUPIL_RANGE_MIN
+  const maxPupileCountRange = PUPIL_RANGE_MAX
+
+
 
   const controls = {
     show: true,
@@ -210,30 +222,30 @@ function Home() {
               <h2 className="text-lg font-semibold text-gray-700 mb-4 w-full">
                 Current Values
               </h2>
-             
-             <div>
-              <div className="flex items-center gap-6">
-                {/* { Danger} */}
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                  <p className="text-sm text-gray-700 font-medium">Danger</p>
-                </div>
-                 
-                 {/* {Warning} */}
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                  <p className="text-sm text-gray-700 font-medium">Warning</p>
-                </div>
 
-                {/* Normal */}
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-primary-400"></span>
-                  <p className="text-sm text-gray-700 font-medium">Normal</p>
+              <div>
+                <div className="flex items-center gap-6">
+                  {/* { Danger} */}
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                    <p className="text-sm text-gray-700 font-medium">Danger</p>
+                  </div>
+
+                  {/* {Warning} */}
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <p className="text-sm text-gray-700 font-medium">Warning</p>
+                  </div>
+
+                  {/* Normal */}
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-primary-400"></span>
+                    <p className="text-sm text-gray-700 font-medium">Normal</p>
+                  </div>
                 </div>
-              </div>
-              <div className='border py-2 px-2 rounded-xl'>
+                <div className='border py-2 px-2 rounded-xl'>
                   These values check if your eyes are normal or having any problem.
-              </div>
+                </div>
               </div>
             </div>
 
@@ -262,6 +274,7 @@ function Home() {
               <CardRow
                 label="Moisture"
                 value={recentfieldFourValue}
+                min={15}
               />
 
               <CardRow
@@ -273,12 +286,16 @@ function Home() {
 
               <CardRow
                 label="Fatigue"
-                value={recentfieldSevenValue}                
+                value={recentfieldSevenValue}
+                min={Number(minFatigueCountRange)}
+                max={Number(maxFatigueCountRange)}
               />
 
               <CardRow
                 label="Pupil Diameter"
                 value={recentThinkTowFieldOneValue}
+                min={Number(minPupilCountRange)}
+                max={Number(maxPupileCountRange)}
               />
 
               <CardRow
